@@ -1268,9 +1268,9 @@
       <range>Special</range>
       <type>M</type>
       <bonus>
-        <addspirit>
-          <spirit>Watcher</spirit>
-        </addspirit>
+        <addminion>
+          <minion>Watcher</minion>
+        </addminion>
       </bonus>
     </spell>
     <spell>

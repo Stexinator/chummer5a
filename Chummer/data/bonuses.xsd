@@ -164,6 +164,14 @@
           </xs:sequence>
         </xs:complexType>
       </xs:element>
+	  <xs:element name="addminion" minOccurs="0" maxOccurs="unbounded">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="addtoselected" type="xs:string" minOccurs="0" maxOccurs="1" />
+            <xs:element name="minion" type="xs:string" minOccurs="0" maxOccurs="unbounded" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
       <xs:element name="addsprite" minOccurs="0" maxOccurs="unbounded">
         <xs:complexType>
           <xs:sequence>

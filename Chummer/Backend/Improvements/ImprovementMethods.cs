@@ -518,6 +518,8 @@ namespace Chummer
                     return objImprovementAdder.addsprite;
                 case "ADDSPIRIT":
                     return objImprovementAdder.addspirit;
+                case "ADDMINION":
+                    return objImprovementAdder.addminion;
                 case "LIMITSPIRITCATEGORY":
                     return objImprovementAdder.limitspiritcategory;
                 case "MOVEMENTREPLACE":

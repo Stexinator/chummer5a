@@ -42,10 +42,11 @@ namespace Chummer
     {
         Spirit = 0,
         Sprite = 1,
+        Minion = 2
     }
 
     /// <summary>
-    /// A Magician's Spirit or Technomancer's Sprite.
+    /// A Magician's Spirit or Minion or Technomancer's Sprite.
     /// </summary>
     [DebuggerDisplay("{Name}, \"{CritterName}\"")]
     public sealed class Spirit : IHasInternalId, IHasName, IHasXmlNode, IHasMugshots, INotifyPropertyChanged, IHasNotes
@@ -79,6 +80,8 @@ namespace Chummer
             {
                 case "Spirit":
                     return SpiritType.Spirit;
+                case "Minion":
+                    return SpiritType.Minion;
                 default:
                     return SpiritType.Sprite;
             }
@@ -460,6 +463,8 @@ namespace Chummer
                 {
                     case SpiritType.Spirit:
                         return "String_Force";
+                    case SpiritType.Minion:
+                        return "String_Force";
                     case SpiritType.Sprite:
                         return "String_Level";
                     default:
@@ -534,6 +539,9 @@ namespace Chummer
                     case SpiritType.Spirit when value > CharacterObject.MaxSpiritForce:
                         value = CharacterObject.MaxSpiritForce;
                         break;
+                    case SpiritType.Minion when value > CharacterObject.MaxSpiritForce:
+                        value = CharacterObject.MaxSpiritForce;
+                        break;
                     case SpiritType.Sprite when value > CharacterObject.MaxSpriteLevel:
                         value = CharacterObject.MaxSpriteLevel;
                         break;
@@ -576,7 +584,7 @@ namespace Chummer
         }
 
         /// <summary>
-        /// The Spirit's type, either Spirit or Sprite.
+        /// The Spirit's type, either Spirit or Sprite or Minion.
         /// </summary>
         public SpiritType EntityType
         {
@@ -593,7 +601,7 @@ namespace Chummer
         }
 
         /// <summary>
-        /// Name of the save file for this Spirit/Sprite.
+        /// Name of the save file for this Spirit/Sprite/Minion.
         /// </summary>
         public string FileName
         {
@@ -667,7 +675,7 @@ namespace Chummer
             }
         }
         /// <summary>
-        /// Whether the sprite/spirit has unlimited services due to Fettering.
+        /// Whether the sprite/spirit/minion has unlimited services due to Fettering.
         /// See KC 91 and SG 192 for sprites and spirits, respectively.
         /// </summary>
         public bool Fettered
@@ -675,7 +683,7 @@ namespace Chummer
             get
             {
                 if (_intCachedAllowFettering < 0)
-                    _intCachedAllowFettering = CharacterObject.AllowSpriteFettering
+                    _intCachedAllowFettering = CharacterObject.AllowSpriteFettering || EntityType == SpiritType.Minion
                         ? 1
                         : 0;
                 return _blnFettered && _intCachedAllowFettering > 0;
@@ -727,9 +735,9 @@ namespace Chummer
                 }
                 else
                 {
-                    if (CharacterObject.Created && !Bound && ServicesOwed > 0 && CharacterObject.Spirits.Any(x =>
+                    if (CharacterObject.Created &&  !Bound && ServicesOwed > 0 && CharacterObject.Spirits.Any(x =>
                         !ReferenceEquals(x, this) && x.EntityType == EntityType && x.ServicesOwed > 0 && !x.Bound &&
-                        !x.Fettered))
+                        !x.Fettered && x.EntityType != SpiritType.Minion))
                     {
                         // Once created, new sprites/spirits are added as Unbound first. We're not permitted to have more than 1 at a time, but we only count ones that have services.
                         Program.MainForm.ShowMessageBox(null,

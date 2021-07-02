@@ -5913,6 +5913,28 @@ namespace Chummer
             IsDirty = true;
         }
 
+        protected void AddMinion()
+        {
+            // The number of bound Spirits cannot exceed the character's CHA.
+            if (!CharacterObject.IgnoreRules && CharacterObject.Spirits.Count(x => x.EntityType == SpiritType.Minion) >= CharacterObject.CHA.Value)
+            {
+                Program.MainForm.ShowMessageBox(this, LanguageManager.GetString("Message_BoundSpiritLimit"),
+                    LanguageManager.GetString("MessageTitle_BoundSpiritLimit"), MessageBoxButtons.OK,
+                    MessageBoxIcon.Information);
+                return;
+            }
+            Spirit objSpirit = new Spirit(CharacterObject)
+            {
+                EntityType = SpiritType.Minion,
+                Force = CharacterObject.MaxSpiritForce
+            };
+            CharacterObject.Spirits.Add(objSpirit);
+
+            IsCharacterUpdateRequested = true;
+
+            IsDirty = true;
+        }
+
         protected void AddSprite()
         {
             // In create, all sprites are added as Bound/Registered. The number of registered Sprites cannot exceed the character's LOG.

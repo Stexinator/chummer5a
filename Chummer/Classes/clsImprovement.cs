@@ -337,6 +337,7 @@ namespace Chummer
             ActionDicePool,
             SpecialModificationLimit,
             AddSpirit,
+            AddMinion,
             ContactKarmaDiscount,
             ContactKarmaMinimum,
             GenetechEssMultiplier,

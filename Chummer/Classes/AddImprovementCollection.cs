@@ -6456,6 +6456,20 @@ namespace Chummer.Classes
             }
             AddSpiritOrSprite("traditions.xml",xmlAllowedSpirits, Improvement.ImprovementType.AddSpirit, addToSelected, "Spirits");
         }
+
+        public void addminion(XmlNode bonusNode)
+        {
+            if (bonusNode == null)
+                throw new ArgumentNullException(nameof(bonusNode));
+            Log.Info("addminion");
+            XmlNodeList xmlAllowedSpirits = bonusNode.SelectNodes("spirit");
+            bool addToSelected = true;
+            if (bonusNode.SelectSingleNode("addtoselected") != null)
+            {
+                addToSelected = Convert.ToBoolean(bonusNode.SelectSingleNode("addtoselected")?.Value, GlobalOptions.InvariantCultureInfo);
+            }
+            AddSpiritOrSprite("traditions.xml", xmlAllowedSpirits, Improvement.ImprovementType.AddMinion, addToSelected, "Spirits");
+        }
         /// <summary>
         /// Improvement type that limits the spirits a character can summon to a particular category.
         /// </summary>
